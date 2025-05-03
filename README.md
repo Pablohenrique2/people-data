@@ -9,7 +9,7 @@ Este projeto é um formulário simples para cadastrar informações pessoais e p
 Primeiramente, clone o repositório:
 
 ```shell
-git clone [https://github.com/your/people-data.git](https://github.com/Pablohenrique2/people-data.git)
+git clone https://github.com/Pablohenrique2/people-data.git
 cd people-data/
 ```
 
