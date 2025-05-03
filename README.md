@@ -1,59 +1,73 @@
-# PeopleData
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.2.
+# People-Data &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
+> Projeto de cadastro de informações pessoais com funcionalidades de CRUD.
 
-## Development server
+Este projeto é um formulário simples para cadastrar informações pessoais e permite editar e deletar os dados cadastrados.
 
-To start a local development server, run:
+## Installing / Getting started
 
-```bash
+Primeiramente, clone o repositório:
+
+```shell
+git clone https://github.com/your/people-data.git
+cd people-data/
+```
+
+Instale as dependências necessárias:
+
+```shell
+npm install
+```
+
+Após a instalação, inicie o servidor de desenvolvimento:
+
+```shell
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Agora, o projeto estará rodando em `http://localhost:4200`.
 
-## Code scaffolding
+## Estrutura do Projeto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+O projeto segue a seguinte estrutura de pastas:
 
-```bash
-ng generate component component-name
-```
+- **list**: Contém a lógica das ações que mostram os usuários cadastrados e possui funcionalidades de editar ou excluir o usuário.
+- **register**: Contém a lógica e a interface para cadastro dos usuários, incluindo as validações dos campos de entrada.
+- **edit-modal-info**: Modal de edição das informações cadastradas, utilizado para modificar os dados do usuário.
+- **service/user**: Contém os serviços responsáveis pelas chamadas da API para o backend, consumindo e manipulando os dados.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Armazenamento e Manipulação de Dados
 
-```bash
-ng generate --help
-```
+O projeto utiliza o **LocalStorage** para o armazenamento e manipulação das informações cadastradas. Os dados dos usuários são salvos localmente no navegador, garantindo persistência durante a navegação na aplicação.
 
-## Building
+## Desenvolvendo
 
-To build the project run:
+### Built With
+- **Angular 19**
+- **ngx-mask** (para mascarar campos de entrada)
+- **sweetalert2** (para mostrar alertas interativos)
 
-```bash
-ng build
-```
+### Prerequisites
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Antes de iniciar, certifique-se de ter o Node.js e o Angular CLI instalados:
 
-## Running unit tests
+- [Node.js](https://nodejs.org/) (versão 16 ou superior)
+- [Angular CLI](https://angular.io/cli) (versão 19 ou superior)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Configuração
 
-```bash
+Você pode configurar os campos do formulário para aceitar apenas valores válidos de acordo com os requisitos do cadastro. A máscara de CPF e telefone pode ser configurada utilizando o `ngx-mask`.
+
+## Testes
+
+O projeto utiliza o framework de testes do Angular. Para rodar os testes:
+
+```shell
 ng test
 ```
 
-## Running end-to-end tests
+Isso executará os testes configurados no projeto.
 
-For end-to-end (e2e) testing, run:
+## Licenciamento
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Este projeto é licenciado sob a licença MIT. Para mais detalhes, consulte o arquivo [LICENSE](https://github.com/your/people-data/blob/master/LICENSE).

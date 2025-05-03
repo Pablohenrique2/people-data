@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+button,
+input,
+textarea,
+select {
+  border: none;
+  outline: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+
+input,
+textarea,
+select {
+  background: transparent;
+  border: none;
+}
+
+
+ul, ol {
+  list-style: none;
+}
+
+
+table {
+  border-collapse: collapse;
+}
+
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+}

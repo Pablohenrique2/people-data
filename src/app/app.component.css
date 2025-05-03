@@ -1,0 +1,59 @@
+:host {
+  --nav-bg: #00c8b3;
+  --nav-font-color: #ffffff;
+  --nav-hover-color: #fb2a6c;
+  --nav-active-color: #ffffff;
+  --nav-active-bg: #fb2a6c;
+  --nav-link-padding: 10px 20px; 
+  --nav-link-border-radius: 30px; 
+  --transition-speed: 0.3s; 
+}
+
+body {
+  background-color: #f2f3f5;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+nav {
+  background-color: var(--nav-bg);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+  color: var(--nav-font-color);
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  padding: var(--nav-link-padding);
+  border-radius: var(--nav-link-border-radius);
+  transition: background-color var(--transition-speed),
+    transform var(--transition-speed);
+    cursor: pointer;
+}
+
+nav a:hover {
+  color: var(--nav-hover-color);
+  background-color: rgba(251, 42, 108, 0.1); 
+  transform: scale(1.1); 
+}
+
+nav a.active {
+  text-decoration: none;
+  color: var(--nav-active-color);
+  background-color: var(--nav-active-bg);
+  transform: scale(1.1);
+}
+
+nav a:focus {
+  outline: none;
+}
