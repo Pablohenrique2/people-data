@@ -33,8 +33,15 @@ O projeto segue a seguinte estrutura de pastas:
 
 - **list**: Contém a lógica das ações que mostram os usuários cadastrados e possui funcionalidades de editar ou excluir o usuário.
 - **register**: Contém a lógica e a interface para cadastro dos usuários, incluindo as validações dos campos de entrada.
+- **nav**:  Contém a lógica e os elementos necessários para facilitar a navegação entre as seções da aplicação.
 - **edit-modal-info**: Modal de edição das informações cadastradas, utilizado para modificar os dados do usuário.
 - **service/user**: Contém os serviços responsáveis pelas chamadas da API para o backend, consumindo e manipulando os dados.
+- **components/personal-form**: Componente reutilizável responsável por encapsular o formulário de cadastro/edição de usuários. Ele é utilizado tanto no cadastro de novos usuários quanto na edição das informações existentes, promovendo reutilização de código e consistência na interface.
+- **service/local-storage/local-user.service.ts**: Serviço que lida com a manipulação dos dados de usuário no armazenamento local.
+- **service/local-storage/local-registration.service.ts**: Serviço que lida com a manipulação dos registros de usuários no armazenamento local.
+- **models/personal-form.model.ts**:  Modelo que define a estrutura de dados para o formulário pessoal.
+- **models/registration.model.ts**: Modelo que define a estrutura de dados para o registro de usuários.
+- **models/user.model.ts**: Modelo que define a estrutura de dados para o usuário.
 
 ## Armazenamento e Manipulação de Dados
 

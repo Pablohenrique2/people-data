@@ -5,6 +5,8 @@ import { EditModalInfoComponent } from '../edit-modal-info/edit-modal-info.compo
 import Swal from 'sweetalert2';
 import { UserService } from '../service/user/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { Registration } from '../models/registration.model';
+import { LocalRegistrationService } from '../service/local-storage/local-registration.service';
 
 @Component({
   selector: 'app-list',
@@ -16,16 +18,19 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.css',
+  styleUrls: ['./list.component.css'],
   providers: [UserService],
 })
 export class ListComponent {
-  registrations: any[] = [];
+  registrations: Registration[] = [];
   showModal: boolean = false;
-  editedRegister: any = {};
+  editedRegister: Registration = {} as Registration;
   isSmallScreen: boolean = false;
 
-  constructor(private user_service: UserService) {
+  constructor(
+    private user_service: UserService,
+    private localRegistrationService: LocalRegistrationService
+  ) {
     this.checkScreenWidth();
   }
 
@@ -39,20 +44,22 @@ export class ListComponent {
   }
 
   ngOnInit(): void {
-    const localRegistrations = JSON.parse(
-      localStorage.getItem('register') || '[]'
-    );
-
+    const localRegistrations = this.localRegistrationService.getRegistrations();
+  
     this.user_service.getUsers().subscribe((data) => {
       const apiDataWithActions = data.map((item: any) => ({
         ...item,
         acoes: 'N',
       }));
 
-      const localDataWithActions = localRegistrations.map((item: any) => ({
-        ...item,
-        acoes: 'S',
-      }));
+      const apiCpfs = new Set(apiDataWithActions.map((item: any) => item.cpf));
+
+      const localDataWithActions = localRegistrations
+        .filter((item: any) => !apiCpfs.has(item.cpf))
+        .map((item: any) => ({
+          ...item,
+          acoes: 'S',
+        }));
 
       this.registrations = [...apiDataWithActions, ...localDataWithActions];
     });
@@ -64,6 +71,7 @@ export class ListComponent {
   }
 
   onDelete(index: number): void {
+    const registrationToDelete = this.registrations[index];
     Swal.fire({
       title: 'Excluir registro?',
       text: 'Deseja excluir esta informação permanentemente?',
@@ -73,8 +81,8 @@ export class ListComponent {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
+        this.localRegistrationService.deleteRegistration(registrationToDelete.cpf);
         this.registrations.splice(index, 1);
-        localStorage.setItem('register', JSON.stringify(this.registrations));
         Swal.fire('Excluído!', 'Informação excluída com sucesso.', 'success');
       }
     });
@@ -83,13 +91,12 @@ export class ListComponent {
   formatCpf(cpf: string): string {
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
+
   formatPhone(phone: string): string {
-    const digits = phone.replace(/\D/g, ''); 
-    
+    const digits = phone.replace(/\D/g, '');
     if (digits.length === 11) {
       return digits.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
     } else if (digits.length === 10) {
-   
       return digits.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
     } else {
       return phone;
@@ -100,14 +107,13 @@ export class ListComponent {
     this.showModal = false;
   }
 
-  onSave(updatedRegister: any) {
+  onSave(updatedRegister: Registration) {
+    this.localRegistrationService.updateRegistration(updatedRegister);
     const index = this.registrations.findIndex(
       (reg) => reg.cpf === updatedRegister.cpf
     );
     if (index !== -1) {
       this.registrations[index] = updatedRegister;
-      localStorage.setItem('register', JSON.stringify(this.registrations));
-
       Swal.fire({
         icon: 'success',
         title: 'Informação atualizada',

@@ -4,103 +4,12 @@
 
     <div class="form-container">
       <h2 class="mb-16">Cadastro de Dados Pessoais</h2>
-      <form (ngSubmit)="onSubmit()" #editedRegisterForm="ngForm" novalidate>
-        <div>
-          <label for="name">Nome completo (sem abreviações)</label>
-          <input
-            type="text"
-            id="name"
-            [(ngModel)]="editedRegister.name"
-            name="name"
-            #name="ngModel"
-            required
-            minlength="3"
-            autocomplete="off"
-          />
-          <div *ngIf="name.invalid && name.touched" class="error">
-            <span *ngIf="name.errors?.['required']"
-              >Campo obrigatório Nome.</span
-            >
-            <span *ngIf="name.errors?.['minlength']"
-              >Campo deve conter 3 caracteres ou mais</span
-            >
-          </div>
-        </div>
-
-        <div>
-          <label for="cpf">CPF:</label>
-          <input
-            type="text"
-            id="cpf"
-            [(ngModel)]="editedRegister.cpf"
-            name="cpf"
-            #cpf="ngModel"
-            required
-            autocomplete="off"
-            [mask]="'000.000.000-00'"
-          />
-          <div *ngIf="cpf.invalid && cpf.touched" class="error">
-            <span *ngIf="cpf.errors?.['required']">Campo obrigatório CPF.</span>
-            <span *ngIf="isCpfIncomplete()">CPF incompleto.</span>
-          </div>
-        </div>
-
-        <div>
-          <label for="phone">Telefone:</label>
-          <input
-            type="text"
-            id="phone"
-            [(ngModel)]="editedRegister.phone"
-            name="phone"
-            #phone="ngModel"
-            required
-            autocomplete="off"
-            [mask]="'(00) 00000-0000'"
-          />
-          <div *ngIf="phone.invalid && phone.touched" class="error">
-            <span *ngIf="phone.errors?.['required']"
-              >Campo obrigatório Telefone.</span
-            >
-            <span *ngIf="isPhoneIncomplete()"> Telefone incompleto. </span>
-          </div>
-        </div>
-
-        <div>
-          <label for="email">Email <span aria-hidden="true">*</span></label>
-          <input
-            type="email"
-            id="email"
-            [(ngModel)]="editedRegister.email"
-            name="email"
-            #email="ngModel"
-            required
-            pattern=".+@.+"
-            autocomplete="off"
-            [class.invalid-input]="email.invalid && email.touched"
-          />
-          <div *ngIf="email.invalid && email.touched" class="error">
-            <span *ngIf="email.errors?.['required']"
-              >O campo de e-mail é obrigatório.</span
-            >
-            <span *ngIf="email.errors?.['pattern']"
-              >Informe um e-mail válido. Ex: nome&#64;exemplo.com</span
-            >
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          [disabled]="!editedRegisterForm.form.valid || isLoading"
-          [ngStyle]="{
-            'background-color': isLoading ? 'var(--enabled-bg)' : ''
-          }"
-        >
-          <ng-container *ngIf="!isLoading"> Salvar</ng-container>
-          <ng-container *ngIf="isLoading"
-            ><span class="spinner"></span
-          ></ng-container>
-        </button>
-      </form>
+      <app-personal-form
+        [model]="editedRegister"
+        [isLoading]="isLoading"
+        submitText="Salvar"
+        (formSubmit)="onSubmit()"
+      ></app-personal-form>
     </div>
   </div>
 </div>

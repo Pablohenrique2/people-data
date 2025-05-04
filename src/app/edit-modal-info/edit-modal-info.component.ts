@@ -1,44 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgxMaskDirective } from 'ngx-mask';
+import { PersonalFormComponent } from '../components/personal-form/personal-form.component';
+import { Registration } from '../models/registration.model';
 
 @Component({
   selector: 'app-edit-modal-info',
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgxMaskDirective
-  ],
+  standalone: true,
+  imports: [CommonModule, FormsModule, PersonalFormComponent],
   templateUrl: './edit-modal-info.component.html',
-  styleUrl: './edit-modal-info.component.css'
+  styleUrls: ['./edit-modal-info.component.css'],
 })
 export class EditModalInfoComponent {
   @Input() showModal: boolean = false;
-  @Input() editedRegister: any = {};
-  @Output() close = new EventEmitter();
-  @Output() save = new EventEmitter();
-  isLoading = false;
+  @Input() editedRegister: Registration = {} as Registration;
+  @Output() close = new EventEmitter<void>();
+  @Output() save = new EventEmitter<Registration>();
+  isLoading: boolean = false;
 
-
-  
-  isCpfIncomplete(): boolean {
-    if (!this.editedRegister?.cpf) return false;
-    const digitsOnly = this.editedRegister.cpf.replace(/\D/g, '');
-    return digitsOnly.length < 11;
-  }
-
-  isPhoneIncomplete(): boolean {
-    if (!this.editedRegister?.phone) return false;
-    const digitsOnly = this.editedRegister.phone.replace(/\D/g, '');
-    return digitsOnly.length < 11; 
-  }
-
-  closeModal() {
+  closeModal(): void {
     this.close.emit();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.isLoading = true;
     setTimeout(() => {
       this.save.emit(this.editedRegister);

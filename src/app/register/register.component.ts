@@ -1,19 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgxMaskDirective } from 'ngx-mask';
 import Swal from 'sweetalert2';
+import { PersonalFormComponent } from '../components/personal-form/personal-form.component';
+import { User } from '../models/user.model';
+import { LocalUserService } from '../service/local-storage/local-user.service';
+
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, FormsModule, NgxMaskDirective],
+  standalone: true,
+  imports: [CommonModule, FormsModule, PersonalFormComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-
 export class RegisterComponent {
-  register = {
+  @ViewChild('formRef') formRef!: NgForm;
+
+  register: User = {
     name: '',
     cpf: '',
     phone: '',
@@ -22,15 +27,16 @@ export class RegisterComponent {
 
   isLoading = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private localUserService: LocalUserService
+  ) {}
 
-  onSubmit() {
+  onSubmit(): void {
     this.isLoading = true;
 
     setTimeout(() => {
-      const dados = JSON.parse(localStorage.getItem('register') || '[]');
-      dados.push(this.register);
-      localStorage.setItem('register', JSON.stringify(dados));
+      this.localUserService.saveUser(this.register);
 
       Swal.fire({
         title: 'Sucesso!',
@@ -51,19 +57,7 @@ export class RegisterComponent {
     }, 1500);
   }
 
-  isCpfIncomplete(): boolean {
-    if (!this.register?.cpf) return false;
-    const digitsOnly = this.register.cpf.replace(/\D/g, '');
-    return digitsOnly.length < 11;
-  }
-
-  isPhoneIncomplete(): boolean {
-    if (!this.register?.phone) return false;
-    const digitsOnly = this.register.phone.replace(/\D/g, '');
-    return digitsOnly.length < 11; 
-  }
-
-  resetForm() {
+  resetForm(): void {
     this.register = {
       name: '',
       cpf: '',
@@ -71,9 +65,8 @@ export class RegisterComponent {
       email: '',
     };
 
-    const form = document.querySelector('form');
-    if (form) {
-      form.reset();
+    if (this.formRef) {
+      this.formRef.resetForm();
     }
   }
 }

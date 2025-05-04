@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';  // Importando o RouterModule
+import { RouterModule } from '@angular/router';
+import { NavComponent } from './nav/nav.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,  // Garantindo que o componente seja standalone
+  standalone: true,  
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [RouterModule]  // Importando o RouterModule aqui
+  imports: [RouterModule, NavComponent]  
 })
 export class AppComponent {
   title = 'PeopleData';
